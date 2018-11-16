@@ -1,4 +1,6 @@
-# Ockam DID Method Specification [DRAFT]
+# Ockam DID Method Specification
+
+[![](https://img.shields.io/badge/Status-Draft-orange.svg?style=flat-square)](#Status)
 
 This document specifies the Ockam [DID Method](1) [`did:ockam`].
 
@@ -115,6 +117,10 @@ did:ockam:us:east:2PCd14L1pLMpfSfpgKe2HyYZFu2pf
 ```
 
 a zone name **MUST** include only lowercase letters or digits.
+
+## Status
+
+This document is a work in progress draft.
 
 [1]: https://w3c-ccg.github.io/did-spec/#specific-did-method-schemes "Specific DID Method Schemes"
 [2]: https://git.io/did-primer "DID Primer"
