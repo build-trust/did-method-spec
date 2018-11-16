@@ -12,7 +12,7 @@ The namestring that shall identify this DID method is: `ockam`
 
 A DID that uses this method **MUST** begin with the following prefix: `did:ockam:`. Per the DID specification,
 this prefix MUST be in lowercase. The format of remainder of the DID, after this prefix, is specified below in
-the section on [Method Specific Identifiers](#Method Specific Identifiers).
+the section on [Method Specific Identifiers](#method-specific-identifiers).
 
 ## Method Specific Identifiers
 
@@ -94,7 +94,7 @@ func main() {
 	d := &did.DID{Method: "ockam", ID: id}
 	fmt.Println(d)
 
-  // Example Output: did:ockam:2PCd14L1pLMpfSfpgKe2HyYZFu2pf
+	// Example Output: did:ockam:2PCd14L1pLMpfSfpgKe2HyYZFu2pf
 }
 ```
 
