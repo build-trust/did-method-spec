@@ -122,6 +122,24 @@ a zone name **MUST** include only lowercase letters or digits.
 
 This document is a work in progress draft.
 
+## References
+
+1.  Decentralized Identifiers (DIDs) v0.11 https://w3c-ccg.github.io/did-spec
+
+2.  ABNF https://tools.ietf.org/html/rfc5234
+
+3.  Multihash - Self-describing hashes https://multiformats.io/multihash/
+
+4.  The Multihash Data Format https://tools.ietf.org/html/draft-multiformats-multihash-00
+
+5.  Multihash Labels https://github.com/multiformats/multicodec/blob/master/table.csv
+
+6.  Base58 Encoding https://en.wikipedia.org/wiki/Base58
+
+7.  Bitcoin Base58 Alphabet https://en.bitcoinwiki.org/wiki/Base58#Alphabet_Base58
+
+8.  Linked Data Cryptographic Suite Registry https://w3c-ccg.github.io/ld-cryptosuite-registry
+
 [1]: https://w3c-ccg.github.io/did-spec/#specific-did-method-schemes "Specific DID Method Schemes"
 [2]: https://git.io/did-primer "DID Primer"
 [3]: https://w3c-ccg.github.io/did-spec "DID Spec"
