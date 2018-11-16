@@ -118,6 +118,169 @@ did:ockam:us:east:2PCd14L1pLMpfSfpgKe2HyYZFu2pf
 
 a zone name **MUST** include only lowercase letters or digits.
 
+## CRUD Operations
+
+### Create/Register
+
+Ockam Clients can create/register an entity in the the Ockam Network by submitting a [Verifiable Claim](11)
+as a transaction. The [issuer](11) and the [subject](11) of this claim are the same DID that is being registered.
+
+Here is an example of such a claim:
+
+```js
+{
+	"@context": "https://w3id.org/security/v1",
+	"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX/credentials/1",
+	"type": ["Credential"],
+	"issuer": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+	"issued": "2018-11-15",
+	"claim": {
+		"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+		"document": {
+			"@context": "https://w3id.org/did/v1",
+			"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+			"publicKey": [{
+				"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX#key1",
+				"type": "RsaVerificationKey2018",
+				"owner": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+				"publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
+			}],
+			"authentication": [{
+				"type": "RsaSignatureAuthentication2018",
+				"publicKey": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX#key1"
+			}],
+			"service": [{
+				"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX/credentials",
+				"type": "CredentialRepositoryService",
+				"serviceEndpoint": "..."
+			}]
+		}
+	},
+	"signature": {
+		"type": "RsaSignature2018",
+		"created": "2018-11-15T21:06:01.546Z",
+		"creator": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX#key1",
+		"domain": "json-ld.org",
+		"nonce": "e8283e888657e23b07f9c9eaf4efe80b49eff76b",
+		"signatureValue": "bd16879C...aD9AF1FaCa"
+	}
+}
+```
+
+The [DID Document](#12) representing the entity is included in the body of the claim.
+
+This transaction is approved and the entity is registered if all of these conditions are true:
+
+1.  if the `did` in the `issuer`, `claim.id` and `claim.document.id` fields match
+2.  if the `claim.document.publicKey` contains at least one public key that when run through the process
+    described in the section on [Generating a unique idstring](#generating-a-unique-idstring) results in the exact DID
+    from the `issuer`, `claim.id` and `claim.document.id` fields.
+3.  if the signature on the claim is by one of the public keys mentioned in the DID document as approved for
+    authentication.
+
+### Read
+
+Ockam Clients can read a DID document by sending a query request for a DID.
+
+For example a query for `did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX` would return:
+
+```
+{
+	"@context": "https://w3id.org/did/v1",
+	"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+	"publicKey": [{
+		"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX#key1",
+		"type": "RsaVerificationKey2018",
+		"owner": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+		"publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
+	}],
+	"authentication": [{
+		"type": "RsaSignatureAuthentication2018",
+		"publicKey": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX#key1"
+	}],
+	"service": [{
+		"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX/credentials",
+		"type": "CredentialRepositoryService",
+		"serviceEndpoint": "..."
+	}]
+}
+```
+
+### Update
+
+Ockam Clients can update a DID document by submitting a [Verifiable Claim](11) as a transaction.
+The [issuer](11) and the [subject](11) of this claim are the same DID that is being updated.
+
+```js
+{
+	"@context": "https://w3id.org/security/v1",
+	"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX/credentials/2",
+	"type": ["Credential"],
+	"issuer": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+	"issued": "2018-11-16",
+	"claim": {
+		"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+		"document": {
+			"@context": "https://w3id.org/did/v1",
+			"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+			"authentication": [{
+				"type": "Ed25519VerificationKey2018",
+				"publicKey": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX#key2"
+			}],
+		}
+	},
+	"signature": {
+		"type": "RsaSignature2018",
+		"created": "2018-11-16T06:37:28.733Z",
+		"creator": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX#key1",
+		"domain": "json-ld.org",
+		"nonce": "79459f19c93f57fe18715d62f93f85e02aa01f4a",
+		"signatureValue": "911653da61a0...11b0be8eaa4"
+	}
+}
+```
+
+This transaction is approved and the entity is updated if all these conditions are true:
+
+1.  if the `did` in the `issuer`, `claim.id` and `claim.document.id` fields match.
+2.  if the signature on the claim is by one of the public keys mentioned in the DID document as approved for
+    authentication.
+
+### Delete/Revoke
+
+Ockam Clients can revoke a DID document by submitting a [Verifiable Claim](11) as a transaction.
+The [issuer](11) and the [subject](11) of this claim are the same DID that is being revoked.
+
+The document field is set to `null`.
+
+```js
+{
+	"@context": "https://w3id.org/security/v1",
+	"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX/credentials/3",
+	"type": ["Credential"],
+	"issuer": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+	"issued": "2018-11-16",
+	"claim": {
+		"id": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX",
+		"document": null
+	},
+	"signature": {
+		"type": "RsaSignature2018",
+		"created": "2018-11-16T06:53:34.162Z",
+		"creator": "did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX#key1",
+		"domain": "json-ld.org",
+		"nonce": "1c4e4834bea6c6cc5f13d5370e8c3cff85234139",
+		"signatureValue": "73b251cb9612...0e446e81a56"
+	}
+}
+```
+
+This transaction is approved and the entity is deleted if all these conditions are true:
+
+1.  if the `did` in the `issuer` and `claim.id` fields match.
+2.  if the signature on the claim is by one of the public keys mentioned in the DID document as approved for
+    authentication.
+
 ## Status
 
 This document is a work in progress draft.
@@ -140,6 +303,10 @@ This document is a work in progress draft.
 
 8.  Linked Data Cryptographic Suite Registry https://w3c-ccg.github.io/ld-cryptosuite-registry
 
+9.  Verifiable Claims https://www.w3.org/TR/verifiable-claims-data-model
+
+10. JSON-LD 1.0 - A JSON-based Serialization for Linked Data https://www.w3.org/TR/json-ld
+
 [1]: https://w3c-ccg.github.io/did-spec/#specific-did-method-schemes "Specific DID Method Schemes"
 [2]: https://git.io/did-primer "DID Primer"
 [3]: https://w3c-ccg.github.io/did-spec "DID Spec"
@@ -150,3 +317,5 @@ This document is a work in progress draft.
 [8]: https://github.com/multiformats/multicodec/blob/master/table.csv "Multihash Labels"
 [9]: https://en.wikipedia.org/wiki/Base58 "Base58 Encoding"
 [10]: https://en.bitcoinwiki.org/wiki/Base58#Alphabet_Base58 "Bitcoin Base58 Alphabet"
+[11]: https://www.w3.org/TR/verifiable-claims-data-model "Verifiable Claims"
+[12]: https://w3c-ccg.github.io/did-spec/#did-documents "DID Documents"
