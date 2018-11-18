@@ -2,11 +2,12 @@
 
 [![](https://img.shields.io/badge/Status-Draft-orange.svg?style=flat-square)](#Status)
 
-This document specifies the Ockam [DID Method](1) [`did:ockam`].
+This document specifies the Ockam
+[DID Method](https://w3c-ccg.github.io/did-spec/#specific-did-method-schemes) [`did:ockam`].
 
 This specification conforms to the requirements specified in the DID specification currently published by the W3C
-Credentials Community Group. For more information about DIDs and DID method specifications, please see [DID Primer](2)
-and [DID Specification](3).
+Credentials Community Group. For more information about DIDs and DID method specifications, please see
+[DID Primer](https://git.io/did-primer) and [DID Specification](https://w3c-ccg.github.io/did-spec).
 
 ## Method Name
 
@@ -18,8 +19,9 @@ the section on [Method Specific Identifiers](#method-specific-identifiers).
 
 ## Method Specific Identifiers
 
-Ockam DIDs conform with [the Generic DID Scheme](4) described in the DID spec. The format of the
-`ockam-specific-idstring` is described below in [ABNF](5):
+Ockam DIDs conform with [the Generic DID Scheme](https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme)
+described in the DID spec. The format of the `ockam-specific-idstring` is described below in
+[ABNF](https://tools.ietf.org/html/rfc5234):
 
 ```
 ockam-did               = "did:ockam:" ockam-specific-idstring
@@ -41,12 +43,16 @@ base58char              = "1" / "2" / "3" / "4" / "5" / "6" / "7" / "8" / "9" / 
 
 A unique `idstring` is created as follows:
 
-1.  Generate a public/private keypair, using one of the methods in the [Linked Data Cryptographic Suite Registry](6).
-2.  Hash the public key from step 1 using one of the hashing algorithms supported by [multihash](7).
+1.  Generate a public/private keypair, using one of the methods in the
+    [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/).
+2.  Hash the public key from step 1 using one of the hashing algorithms supported by
+    [multihash](https://multiformats.io/multihash/).
 3.  Truncate the hash from step 2 to the lower 20 bytes.
-4.  Prepend the [multihash prefix](8) for the algorithm chosen in step 2 (the length part of a multihash is not
-    included because length of the hashed value is always 20 bytes per step 3)
-5.  [Base58](9) encode the value from step 4 using the [Bitcoin alphabet](10).
+4.  Prepend the [multihash prefix](https://github.com/multiformats/multicodec/blob/master/table.csv)
+    for the algorithm chosen in step 2 (the length part of a multihash is not included because length of the hashed
+    value is always 20 bytes per step 3)
+5.  [Base58](https://en.wikipedia.org/wiki/Base58) encode the value from step 4 using the
+    [Bitcoin alphabet](https://en.bitcoinwiki.org/wiki/Base58#Alphabet_Base58).
 
 The following Golang code illustrates this process of generating a unique `idstring`:
 
@@ -122,8 +128,10 @@ a zone name **MUST** include only lowercase letters or digits.
 
 ### Create/Register
 
-Ockam Clients can create/register an entity in the the Ockam Network by submitting a [Verifiable Claim](11)
-as a transaction. The [issuer](11) and the [subject](11) of this claim are the same DID that is being registered.
+Ockam Clients can create/register an entity in the the Ockam Network by submitting a
+[Verifiable Claim](https://www.w3.org/TR/verifiable-claims-data-model) as a transaction.
+The [issuer](https://www.w3.org/TR/verifiable-claims-data-model) and the
+[subject](https://www.w3.org/TR/verifiable-claims-data-model) of this claim are the same DID that is being registered.
 
 Here is an example of such a claim:
 
@@ -167,7 +175,8 @@ Here is an example of such a claim:
 }
 ```
 
-The [DID Document](#12) representing the entity is included in the body of the claim.
+The [DID Document](https://w3c-ccg.github.io/did-spec/#did-documents) representing the entity is included in the body
+of the claim.
 
 This transaction is approved and the entity is registered if all of these conditions are true:
 
@@ -208,8 +217,10 @@ For example a query for `did:ockam:2Mm9pLRQwueo7FJUvBoDW7QKGBXTX` would return:
 
 ### Update
 
-Ockam Clients can update a DID document by submitting a [Verifiable Claim](11) as a transaction.
-The [issuer](11) and the [subject](11) of this claim are the same DID that is being updated.
+Ockam Clients can update a DID document by submitting a
+[Verifiable Claim](https://www.w3.org/TR/verifiable-claims-data-model) as a transaction.
+The [issuer](https://www.w3.org/TR/verifiable-claims-data-model) and the
+[subject](https://www.w3.org/TR/verifiable-claims-data-model) of this claim are the same DID that is being updated.
 
 ```js
 {
@@ -248,8 +259,10 @@ This transaction is approved and the entity is updated if all these conditions a
 
 ### Delete/Revoke
 
-Ockam Clients can revoke a DID document by submitting a [Verifiable Claim](11) as a transaction.
-The [issuer](11) and the [subject](11) of this claim are the same DID that is being revoked.
+Ockam Clients can revoke a DID document by submitting a
+[Verifiable Claim](https://www.w3.org/TR/verifiable-claims-data-model) as a transaction.
+The [issuer](https://www.w3.org/TR/verifiable-claims-data-model) and the
+[subject](https://www.w3.org/TR/verifiable-claims-data-model) of this claim are the same DID that is being revoked.
 
 The document field is set to `null`.
 
@@ -306,16 +319,3 @@ This document is a work in progress draft.
 9.  Verifiable Claims https://www.w3.org/TR/verifiable-claims-data-model
 
 10. JSON-LD 1.0 - A JSON-based Serialization for Linked Data https://www.w3.org/TR/json-ld
-
-[1]: https://w3c-ccg.github.io/did-spec/#specific-did-method-schemes "Specific DID Method Schemes"
-[2]: https://git.io/did-primer "DID Primer"
-[3]: https://w3c-ccg.github.io/did-spec "DID Spec"
-[4]: https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme "Generic DID Scheme"
-[5]: https://tools.ietf.org/html/rfc5234 "ABNF"
-[6]: https://w3c-ccg.github.io/ld-cryptosuite-registry/ "Linked Data Cryptographic Suite Registry"
-[7]: https://multiformats.io/multihash/ "Multihash"
-[8]: https://github.com/multiformats/multicodec/blob/master/table.csv "Multihash Labels"
-[9]: https://en.wikipedia.org/wiki/Base58 "Base58 Encoding"
-[10]: https://en.bitcoinwiki.org/wiki/Base58#Alphabet_Base58 "Bitcoin Base58 Alphabet"
-[11]: https://www.w3.org/TR/verifiable-claims-data-model "Verifiable Claims"
-[12]: https://w3c-ccg.github.io/did-spec/#did-documents "DID Documents"
