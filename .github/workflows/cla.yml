@@ -25,6 +25,8 @@ jobs:
           empty-commit-flag: false
           blockchain-storage-flag: false
       - name: "Trigger"
+        env:
+          PERSISTANCE_GITHUB_TOKEN: ${{ secrets.PERSISTANCE_GITHUB_TOKEN }}
         run: |
           curl -H "Accept: application/vnd.github.mercy-preview+json" \
             -H "Authorization: token ${PERSISTANCE_GITHUB_TOKEN}" \
