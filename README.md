@@ -300,7 +300,7 @@ This document is a work in progress draft.
 
 ## References
 
-1.  Decentralized Identifiers (DIDs) v0.11 https://w3c-ccg.github.io/did-spec
+1.  Decentralized Identifiers (DIDs) v1.0 https://w3c-ccg.github.io/did-spec
 
 2.  ABNF https://tools.ietf.org/html/rfc5234
 
